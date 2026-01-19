@@ -8,6 +8,7 @@ import {
   promptTokenName
 } from './utils/prompts.js';
 import {
+  checkNpmVersion,
   checkAuthentication,
   performLogin,
   getCurrentAuthToken,
@@ -18,6 +19,20 @@ import { updateNpmrc, updateYarnrc } from './services/config.service.js';
 
 async function main() {
   logger.banner('🔐 npm-keep-me-logged-in');
+
+  // Step 0: Check npm version
+  logger.info('Checking npm version...');
+  const versionCheck = await checkNpmVersion();
+
+  if (!versionCheck.isValid) {
+    logger.error(`npm v11+ is required, but you have npm v${versionCheck.version}`);
+    logger.gray('Please upgrade npm: npm install -g npm@latest');
+    logger.newline();
+    process.exit(1);
+  }
+
+  logger.success(`npm v${versionCheck.version} detected`);
+  logger.newline();
 
   // Step 1: Always perform npm login to get a fresh classic token session
   // This is required because granular tokens can't create new tokens

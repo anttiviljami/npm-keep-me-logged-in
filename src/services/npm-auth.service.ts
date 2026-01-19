@@ -9,6 +9,24 @@ import type {
   TokenCreateResult,
 } from '../types/index.js';
 
+export async function checkNpmVersion(): Promise<{ isValid: boolean; version: string }> {
+  try {
+    const { stdout } = await execa('npm', ['--version']);
+    const version = stdout.trim();
+    const majorVersion = parseInt(version.split('.')[0], 10);
+
+    return {
+      isValid: majorVersion >= 11,
+      version
+    };
+  } catch (error) {
+    return {
+      isValid: false,
+      version: 'unknown'
+    };
+  }
+}
+
 export async function checkAuthentication(): Promise<AuthenticationResult> {
   try {
     const { stdout } = await execa('npm', ['whoami']);

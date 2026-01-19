@@ -25,6 +25,14 @@
   "keywords": ["npm", "auth", "login", "token", "cli"],
   "author": "Viljami Kuosmanen <viljami@viljami.io>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anttiviljami/npm-keep-me-logged-in.git"
+  },
+  "bugs": {
+    "url": "https://github.com/anttiviljami/npm-keep-me-logged-in/issues"
+  },
+  "homepage": "https://github.com/anttiviljami/npm-keep-me-logged-in#readme",
   "dependencies": {
     "@inquirer/prompts": "^5.0.0",
     "chalk": "^5.3.0",
