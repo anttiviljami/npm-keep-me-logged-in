@@ -110,7 +110,7 @@ export async function createGranularToken(
       'token',
       'create',
       '--name', uniqueTokenName,
-      '--token-description', uniqueTokenName,
+      '--token-description', `https://www.npmjs.com/package/npm-keep-me-logged-in`,
       '--expires', options.expiration.toString(),
       '--packages-all'
     ];
