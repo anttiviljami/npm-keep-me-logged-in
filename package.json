@@ -1,6 +1,6 @@
 {
   "name": "npm-keep-me-logged-in",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Keeps you logged in to npm registry so you don't have to run `npm login` every day",
   "type": "module",
   "main": "dist/index.js",
@@ -22,7 +22,13 @@
     "README.md",
     "LICENSE"
   ],
-  "keywords": ["npm", "auth", "login", "token", "cli"],
+  "keywords": [
+    "npm",
+    "auth",
+    "login",
+    "token",
+    "cli"
+  ],
   "author": "Viljami Kuosmanen <viljami@viljami.io>",
   "license": "MIT",
   "repository": {
