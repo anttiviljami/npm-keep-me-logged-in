@@ -1,5 +1,5 @@
 # 🔐 npm-keep-me-logged-in
-
+[![CI](https://github.com/anttiviljami/npm-keep-me-logged-in/workflows/CI/badge.svg)](https://github.com/anttiviljami/npm-keep-me-logged-in/actions?query=workflow%3ACI)
 [![npm version](https://img.shields.io/npm/v/npm-keep-me-logged-in.svg)](https://www.npmjs.com/package/npm-keep-me-logged-in)
 [![License](http://img.shields.io/:license-mit-blue.svg)](https://github.com/anttiviljami/npm-keep-me-logged-in/blob/master/LICENSE)
 [![Buy me a coffee](https://img.shields.io/badge/donate-buy%20me%20a%20coffee-orange)](https://buymeacoff.ee/anttiviljami)
