@@ -5,6 +5,7 @@ import {
   promptTokenExpiration,
   promptOrganizations,
   promptBypass2FA,
+  promptUpdateYarnrc,
   promptTokenName
 } from './utils/prompts.js';
 import {
@@ -15,7 +16,7 @@ import {
   createGranularToken
 } from './services/npm-auth.service.js';
 import { fetchUserOrganizations } from './services/npm-org.service.js';
-import { updateNpmrc, updateYarnrc } from './services/config.service.js';
+import { updateYarnrc } from './services/config.service.js';
 
 async function main() {
   logger.banner('🔐 npm-keep-me-logged-in');
@@ -105,36 +106,45 @@ async function main() {
     process.exit(1);
   }
 
-  const token = result.token;
+  // Use the actual token name (may have random suffix appended)
+  const actualTokenName = result.tokenName || tokenName;
+
   logger.newline();
   logger.success('Token created successfully');
-
-  // Show truncated token preview
-  const truncatedToken = token.substring(0, 15) + '...';
-  logger.gray(`Token: ${truncatedToken}`);
   logger.newline();
 
-  // Step 6: Update config files
-  logger.info('Updating configuration files...');
+  // Step 6: Ask about updating yarnrc and do it if requested
+  const shouldUpdateYarnrc = await promptUpdateYarnrc();
 
-  try {
-    await updateNpmrc(token);
-    logger.success('Updated ~/.npmrc');
+  if (shouldUpdateYarnrc) {
+    logger.info('Updating Yarn configuration...');
 
-    await updateYarnrc(token);
-    logger.success('Updated ~/.yarnrc.yml');
-  } catch (error: any) {
-    logger.error(`Failed to update config files: ${error.message}`);
-    logger.warning('\nYour token:');
-    logger.gray(token);
-    logger.warning('\nPlease add it manually to your config files.');
-    process.exit(1);
+    // Read the token from .npmrc
+    const token = await getCurrentAuthToken();
+
+    if (!token) {
+      logger.error('Could not read token from ~/.npmrc');
+      logger.gray('You can add the token manually to ~/.yarnrc.yml if needed');
+    } else {
+      // Show truncated token preview
+      const truncatedToken = token.substring(0, 15) + '...';
+      logger.gray(`Token: ${truncatedToken}`);
+      logger.newline();
+
+      try {
+        await updateYarnrc(token);
+        logger.success('Updated ~/.yarnrc.yml');
+      } catch (error: any) {
+        logger.error(`Failed to update ~/.yarnrc.yml: ${error.message}`);
+        logger.gray('You can add the token manually to ~/.yarnrc.yml if needed');
+      }
+    }
   }
 
   // Step 7: Success message
   logger.newline();
   logger.success('All done!');
-  logger.gray(`Token name: ${tokenName}`);
+  logger.gray(`Token name: ${actualTokenName}`);
   logger.gray(`Token will expire in ${expiration} days`);
   logger.gray('Backups of your config files have been created');
   logger.newline();

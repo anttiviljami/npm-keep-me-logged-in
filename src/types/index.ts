@@ -15,6 +15,7 @@ export interface TokenCreateResult {
   token: string;
   success: boolean;
   error?: string;
+  tokenName?: string;
 }
 
 export interface NpmTokenResponse {

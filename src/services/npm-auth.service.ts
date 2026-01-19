@@ -131,24 +131,14 @@ export async function createGranularToken(
 
     try {
       // Run npm token create interactively - npm will prompt for password and OTP
+      // This automatically updates ~/.npmrc with the new token
       await execa('npm', args, { stdio: 'inherit' });
 
-      // After successful creation, get the most recent token
-      // We need to read it from .npmrc since interactive mode doesn't output it to stdout
-      const token = await getCurrentAuthToken();
-
-      if (token) {
-        return {
-          token,
-          success: true
-        };
-      } else {
-        return {
-          token: '',
-          success: false,
-          error: 'Token creation may have succeeded, but could not read token from .npmrc'
-        };
-      }
+      return {
+        token: '',
+        success: true,
+        tokenName: uniqueTokenName
+      };
     } catch (error: any) {
       return {
         token: '',

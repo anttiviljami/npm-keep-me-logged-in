@@ -42,6 +42,13 @@ export async function promptBypass2FA(): Promise<boolean> {
   });
 }
 
+export async function promptUpdateYarnrc(): Promise<boolean> {
+  return await confirm({
+    message: 'Update ~/.yarnrc.yml with the token? (prevents needing to run yarn npm login)',
+    default: true
+  });
+}
+
 export async function promptPassword(): Promise<string> {
   return await password({
     message: 'Enter your npm password:',
