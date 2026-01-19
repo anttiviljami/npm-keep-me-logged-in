@@ -12,7 +12,7 @@ npx npm-keep-me-logged-in
 
 ## The Problem
 
-Since npm deprecated classic tokens, `npm login` tokens now expire after just 24 hours. If you use private npm packages, you're forced to re-authenticate every single day. This is especially frustrating for developers working with private registries and organization packages.
+Since npm deprecated classic tokens, `npm login` tokens now expire after just 2 hours. If you use private npm packages, you're forced to re-authenticate multiple times per day. This is especially frustrating for developers working with private registries and organization packages.
 
 **This tool fixes the npm login expiration problem** by creating proper granular access tokens that last up to 90 days - no more daily `npm login` prompts.
 
